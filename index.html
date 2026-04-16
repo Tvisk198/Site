@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusPlay — Game Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <span>🔒 <span data-i18n="secure"></span></span>
+      <span class="hide-mobile">Trustpilot <span class="trust-stars">★★★★★</span> 4.8</span>
+    </div>
+    <div class="topbar-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('uk')">UA</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" onclick="setLang('pl')">PL</button>
+      </div>
+      <div class="auth-links" id="auth-links">
+        <a href="#" onclick="openAuthModal('login')" data-i18n="login"></a>
+        <span style="color:var(--border)">|</span>
+        <a href="#" onclick="openAuthModal('register')" data-i18n="register"></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="header">
+  <div class="header-inner">
+    <div class="logo" onclick="showPage('home')">
+      <svg class="logo-svg" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="19,2 36,10 36,28 19,36 2,28 2,10" fill="#FF9800" opacity=".18"/>
+        <polygon points="19,6 32,12 32,26 19,32 6,26 6,12" fill="none" stroke="#FF9800" stroke-width="1.5"/>
+        <path d="M12 19h5M21 19h5M19 12v5M19 21v5" stroke="#FF9800" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="19" cy="19" r="3" fill="#E35E26"/>
+      </svg>
+      <span class="logo-text">NexusPlay</span>
+    </div>
+    <div class="header-search">
+      <input type="text" id="search-input" data-i18n-placeholder="searchPlaceholder" autocomplete="off">
+      <span class="search-icon">⌕</span>
+      <div id="search-results"></div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="toggleWishlist()" title="Wishlist">♡<span class="badge" id="wish-count" style="display:none">0</span></button>
+      <button class="icon-btn" onclick="toggleCart()" title="Cart">🛒<span class="badge" id="cart-count">0</span></button>
+      <button class="burger-btn" onclick="toggleMobileMenu()">☰</button>
+    </div>
+  </div>
+</div>
+
+<div id="mainnav">
+  <div class="nav-inner">
+    <span class="nav-link active" data-i18n="navHome" onclick="showPage('home',this)"></span>
+    <span class="nav-link" data-i18n="navCatalog" onclick="showPage('catalog',this)"></span>
+    <span class="nav-link" data-i18n="navUpcoming" onclick="showPage('home',this)"></span>
+    <span class="nav-link" data-i18n="navNew" onclick="showPage('home',this)"></span>
+    <span class="nav-link" data-i18n="navSoon" onclick="showPage('home',this)"></span>
+    <span class="nav-link" data-i18n="navBrands" onclick="showPage('home',this)"></span>
+  </div>
+</div>
+
+<div id="mobile-menu">
+  <div class="mobile-nav-links">
+    <span class="nav-link" data-i18n="navHome" onclick="showPage('home');toggleMobileMenu()"></span>
+    <span class="nav-link" data-i18n="navCatalog" onclick="showPage('catalog');toggleMobileMenu()"></span>
+    <span class="nav-link" data-i18n="navNew" onclick="toggleMobileMenu()"></span>
+    <span class="nav-link" data-i18n="navBrands" onclick="toggleMobileMenu()"></span>
+  </div>
+</div>
+
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-slider" id="hero-slider">
+      <div class="hero-slide">
+        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/library_hero.jpg" alt="hero" loading="lazy">
+        <div class="hero-content">
+          <span class="hero-badge">HOT DEAL</span>
+          <h1 class="hero-title">Cyberpunk 2077:<br>Phantom Liberty</h1>
+          <div class="hero-price">$19.99 <s>$39.99</s></div>
+          <button class="btn-primary" onclick="addToCart({id:9901,name:'Cyberpunk 2077: Phantom Liberty',price:19.99,img:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg',platform:'PC',genre:'Action RPG',rating:'9.2'})">
+            <span data-i18n="addToCart"></span>
+          </button>
+        </div>
+      </div>
+      <div class="hero-slide">
+        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/library_hero.jpg" alt="hero" loading="lazy">
+        <div class="hero-content">
+          <span class="hero-badge">BESTSELLER</span>
+          <h1 class="hero-title">Red Dead<br>Redemption 2</h1>
+          <div class="hero-price">$29.99 <s>$59.99</s></div>
+          <button class="btn-primary" onclick="addToCart({id:9902,name:'Red Dead Redemption 2',price:29.99,img:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg',platform:'PC',genre:'Action',rating:'9.7'})">
+            <span data-i18n="addToCart"></span>
+          </button>
+        </div>
+      </div>
+      <div class="hero-slide">
+        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="hero" loading="lazy">
+        <div class="hero-content">
+          <span class="hero-badge">-50%</span>
+          <h1 class="hero-title">Elden Ring</h1>
+          <div class="hero-price">$29.99 <s>$59.99</s></div>
+          <button class="btn-primary" onclick="addToCart({id:9903,name:'Elden Ring',price:29.99,img:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg',platform:'PC',genre:'RPG',rating:'9.5'})">
+            <span data-i18n="addToCart"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-arrows">
+      <button class="hero-arrow" onclick="heroSlide(-1)">▲</button>
+      <button class="hero-arrow" onclick="heroSlide(1)">▼</button>
+    </div>
+    <div class="hero-dots" id="hero-dots">
+      <button class="hero-dot active" onclick="goHeroSlide(0)"></button>
+      <button class="hero-dot" onclick="goHeroSlide(1)"></button>
+      <button class="hero-dot" onclick="goHeroSlide(2)"></button>
+    </div>
+  </div>
+
+  <div class="platform-bar">
+    <div class="platform-bar-inner" id="platform-bar-inner">
+      <div class="platform-pill" data-platform="PC" onclick="filterByPlatform('PC',this)">
+        <span class="p-icon">💻</span>
+        <div>
+          <div class="p-name">PC</div>
+          <div class="p-count" id="count-PC">0 Items</div>
+        </div>
+      </div>
+      <div class="platform-pill" data-platform="PS5" onclick="filterByPlatform('PS5',this)">
+        <span class="p-icon">🎮</span>
+        <div>
+          <div class="p-name">PS5</div>
+          <div class="p-count" id="count-PS5">0 Items</div>
+        </div>
+      </div>
+      <div class="platform-pill" data-platform="PS4" onclick="filterByPlatform('PS4',this)">
+        <span class="p-icon">🎮</span>
+        <div>
+          <div class="p-name">PS4</div>
+          <div class="p-count" id="count-PS4">0 Items</div>
+        </div>
+      </div>
+      <div class="platform-pill" data-platform="Xbox" onclick="filterByPlatform('Xbox',this)">
+        <span class="p-icon">🟢</span>
+        <div>
+          <div class="p-name">Xbox</div>
+          <div class="p-count" id="count-Xbox">0 Items</div>
+        </div>
+      </div>
+      <div class="platform-pill" data-platform="Mobile" onclick="filterByPlatform('Mobile',this)">
+        <span class="p-icon">📱</span>
+        <div>
+          <div class="p-name">Mobile</div>
+          <div class="p-count" id="count-Mobile">0 Items</div>
+        </div>
+      </div>
+      <div class="platform-pill" data-platform="Switch" onclick="filterByPlatform('Switch',this)">
+        <span class="p-icon">🕹️</span>
+        <div>
+          <div class="p-name">Switch</div>
+          <div class="p-count" id="count-Switch">0 Items</div>
+        </div>
+      </div>
+      <span class="show-all-label" onclick="showPage('catalog');clearPlatformFilter()"><span data-i18n="showAll"></span> →</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title"><span data-i18n="hotDeals"></span></h2>
+      <div><span class="view-all" onclick="showPage('catalog')" data-i18n="viewAll"></span></div>
+    </div>
+    <div class="games-grid" id="hot-deals-grid"></div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="promo-banner">
+      <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg" alt="promo" loading="lazy">
+      <div class="promo-text">
+        <h3 data-i18n="promoTitle"></h3>
+        <p data-i18n="promoDesc"></p>
+        <button class="btn-primary" style="margin-top:14px" data-i18n="promoBtn"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="section-header">
+      <h2 class="section-title"><span data-i18n="newReleases"></span></h2>
+      <span class="view-all" onclick="showPage('catalog')" data-i18n="viewAll"></span>
+    </div>
+    <div class="games-grid" id="new-releases-grid"></div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="section-header">
+      <h2 class="section-title"><span data-i18n="blogTitle"></span></h2>
+    </div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+
+  <div class="newsletter">
+    <div class="newsletter-inner">
+      <h2 data-i18n="newsletterTitle"></h2>
+      <p data-i18n="newsletterDesc"></p>
+      <div class="newsletter-form">
+        <input type="email" data-i18n-placeholder="emailPlaceholder">
+        <button class="btn-primary" data-i18n="subscribe"></button>
+      </div>
+      <div class="pay-icons">
+        <span class="pay-icon">DISCOVER</span>
+        <span class="pay-icon">mastercard</span>
+        <span class="pay-icon">PayPal</span>
+        <span class="pay-icon">paysafe</span>
+        <span class="pay-icon">VISA</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="page-catalog" class="page">
+  <div class="catalog-layout">
+    <aside class="catalog-sidebar">
+      <div class="sidebar-section">
+        <h4 data-i18n="filterPlatform"></h4>
+        <div class="filter-item"><input type="checkbox" id="f-pc" onchange="applySidebarFilters()"><label for="f-pc">PC / Windows</label><span class="count" id="sc-PC">0</span></div>
+        <div class="filter-item"><input type="checkbox" id="f-ps5" onchange="applySidebarFilters()"><label for="f-ps5">PlayStation 5</label><span class="count" id="sc-PS5">0</span></div>
+        <div class="filter-item"><input type="checkbox" id="f-ps4" onchange="applySidebarFilters()"><label for="f-ps4">PlayStation 4</label><span class="count" id="sc-PS4">0</span></div>
+        <div class="filter-item"><input type="checkbox" id="f-xbox" onchange="applySidebarFilters()"><label for="f-xbox">Xbox</label><span class="count" id="sc-Xbox">0</span></div>
+        <div class="filter-item"><input type="checkbox" id="f-mobile" onchange="applySidebarFilters()"><label for="f-mobile">Mobile</label><span class="count" id="sc-Mobile">0</span></div>
+        <div class="filter-item"><input type="checkbox" id="f-switch" onchange="applySidebarFilters()"><label for="f-switch">Switch</label><span class="count" id="sc-Switch">0</span></div>
+      </div>
+      <div class="sidebar-section">
+        <h4 data-i18n="filterPrice"></h4>
+        <div class="filter-item"><input type="checkbox" id="p1" onchange="applySidebarFilters()"><label for="p1">Under $10</label></div>
+        <div class="filter-item"><input type="checkbox" id="p2" onchange="applySidebarFilters()"><label for="p2">$10 – $25</label></div>
+        <div class="filter-item"><input type="checkbox" id="p3" onchange="applySidebarFilters()"><label for="p3">$25 – $50</label></div>
+        <div class="filter-item"><input type="checkbox" id="p4" onchange="applySidebarFilters()"><label for="p4">$50+</label></div>
+      </div>
+      <div class="sidebar-section">
+        <h4 data-i18n="filterGenre"></h4>
+        <div class="filter-item"><input type="checkbox" id="g1" onchange="applySidebarFilters()"><label for="g1">Action</label></div>
+        <div class="filter-item"><input type="checkbox" id="g2" onchange="applySidebarFilters()"><label for="g2">Adventure</label></div>
+        <div class="filter-item"><input type="checkbox" id="g3" onchange="applySidebarFilters()"><label for="g3">Arcade</label></div>
+        <div class="filter-item"><input type="checkbox" id="g4" onchange="applySidebarFilters()"><label for="g4">Fighting</label></div>
+        <div class="filter-item"><input type="checkbox" id="g5" onchange="applySidebarFilters()"><label for="g5">Racing</label></div>
+        <div class="filter-item"><input type="checkbox" id="g6" onchange="applySidebarFilters()"><label for="g6">RPG</label></div>
+        <div class="filter-item"><input type="checkbox" id="g7" onchange="applySidebarFilters()"><label for="g7">Strategy</label></div>
+        <div class="filter-item"><input type="checkbox" id="g8" onchange="applySidebarFilters()"><label for="g8">Sports</label></div>
+      </div>
+    </aside>
+    <div class="catalog-main">
+      <div class="catalog-toolbar">
+        <span class="catalog-count" id="catalog-count"></span>
+        <select class="sort-select" id="sort-select" onchange="applySidebarFilters()">
+          <option value="popular" data-i18n="sortPopular"></option>
+          <option value="priceAsc" data-i18n="sortPriceAsc"></option>
+          <option value="priceDesc" data-i18n="sortPriceDesc"></option>
+          <option value="newest" data-i18n="sortNewest"></option>
+        </select>
+      </div>
+      <div class="catalog-grid" id="catalog-grid"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="offcanvas" id="cart-panel">
+  <div class="offcanvas-head">
+    <h3 data-i18n="cartTitle"></h3>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="offcanvas-body" id="cart-body"></div>
+  <div class="offcanvas-foot" id="cart-foot" style="display:none">
+    <div class="cart-total"><span data-i18n="total"></span><span id="cart-total-val">$0.00</span></div>
+    <button class="btn-checkout" onclick="window.open('https://send.monobank.ua/jar/2DA1W2wPNv','_blank')" data-i18n="checkout"></button>
+  </div>
+</div>
+
+<div class="offcanvas-overlay" id="wish-overlay" onclick="toggleWishlist()"></div>
+<div class="wishlist-offcanvas" id="wish-panel">
+  <div class="offcanvas-head">
+    <h3 data-i18n="wishTitle"></h3>
+    <button class="close-btn" onclick="toggleWishlist()">✕</button>
+  </div>
+  <div class="offcanvas-body" id="wish-body"></div>
+</div>
+
+<div class="modal-overlay" id="auth-overlay" onclick="closeAuthModal()"></div>
+<div class="modal" id="auth-modal">
+  <div class="modal-head">
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-login" onclick="switchAuthTab('login')" data-i18n="login"></button>
+      <button class="modal-tab" id="tab-register" onclick="switchAuthTab('register')" data-i18n="register"></button>
+    </div>
+    <button class="close-btn" onclick="closeAuthModal()">✕</button>
+  </div>
+  <div class="modal-body">
+    <div id="auth-login-form">
+      <div class="form-group">
+        <label data-i18n="emailLabel"></label>
+        <input type="email" id="login-email" data-i18n-placeholder="emailPlaceholder">
+      </div>
+      <div class="form-group">
+        <label data-i18n="passwordLabel"></label>
+        <input type="password" id="login-password" data-i18n-placeholder="passwordPlaceholder">
+      </div>
+      <button class="btn-primary" style="width:100%;margin-top:8px" onclick="doLogin()" data-i18n="loginBtn"></button>
+    </div>
+    <div id="auth-register-form" style="display:none">
+      <div class="form-group">
+        <label data-i18n="usernameLabel"></label>
+        <input type="text" id="reg-username" data-i18n-placeholder="usernamePlaceholder">
+      </div>
+      <div class="form-group">
+        <label data-i18n="emailLabel"></label>
+        <input type="email" id="reg-email" data-i18n-placeholder="emailPlaceholder">
+      </div>
+      <div class="form-group">
+        <label data-i18n="passwordLabel"></label>
+        <input type="password" id="reg-password" data-i18n-placeholder="passwordPlaceholder">
+      </div>
+      <button class="btn-primary" style="width:100%;margin-top:8px" onclick="doRegister()" data-i18n="registerBtn"></button>
+    </div>
+  </div>
+</div>
+
+<div class="spin-btn" onclick="openSpinModal()" title="Spin to Win!">🎰</div>
+
+<div class="modal-overlay" id="spin-overlay" onclick="closeSpinModal()"></div>
+<div class="modal spin-modal" id="spin-modal">
+  <div class="modal-head">
+    <h3 data-i18n="spinTitle"></h3>
+    <button class="close-btn" onclick="closeSpinModal()">✕</button>
+  </div>
+  <div class="spin-modal-body">
+    <div class="wheel-wrap">
+      <div class="wheel-pointer">▼</div>
+      <canvas id="spin-wheel" width="300" height="300"></canvas>
+    </div>
+    <div class="spin-result" id="spin-result"></div>
+    <button class="btn-primary spin-go-btn" id="spin-go-btn" onclick="doSpin()" data-i18n="spinBtn"></button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 data-i18n="footerService"></h4>
+        <p>+48 606 771 / 175 131 08<br>Mon–Fri: 10:00–18:00<br>Sat–Sun: 10:00–14:00<br>info@nexusplay.gg</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerShop"></h4>
+        <ul>
+          <li><a href="#" data-i18n="fNewReleases"></a></li>
+          <li><a href="#" data-i18n="fHardware"></a></li>
+          <li><a href="#" data-i18n="fAccessories"></a></li>
+          <li><a href="#" data-i18n="fGames"></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerInfo"></h4>
+        <ul>
+          <li><a href="#" data-i18n="fAbout"></a></li>
+          <li><a href="#" data-i18n="fContact"></a></li>
+          <li><a href="#" data-i18n="fPrivacy"></a></li>
+          <li><a href="#" data-i18n="fTerms"></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footerCompany"></h4>
+        <ul>
+          <li><a href="#" data-i18n="fBlog"></a></li>
+          <li><a href="#" data-i18n="fCareers"></a></li>
+          <li><a href="#" data-i18n="fPartners"></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 NexusPlay. <span data-i18n="allRights"></span></p>
+      <div class="social-links">
+        <a class="social-link" href="#">𝕏</a>
+        <a class="social-link" href="#">f</a>
+        <a class="social-link" href="#">in</a>
+        <a class="social-link" href="#">▶</a>
+        <a class="social-link" href="#">💬</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
